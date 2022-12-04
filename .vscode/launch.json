@@ -8,12 +8,12 @@
       "name": "Debug Prolog Files",
       "type": "prolog",
       "request": "launch",
-      "runtimeExecutable": "C:\\Program Files\\swipl\\bin\\swipl.exe",
+      "runtimeExecutable": "/usr/bin/swipl",
       "runtimeArgs": [],
       "env": {},
       "program": "${file}",
       "cwd": "${fileDirname}",
-      "startupQuery": "debug",
+      "startupQuery": "start",
       "stopOnEntry": true,
       "traceCmds": {
         "continue": [

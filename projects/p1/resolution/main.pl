@@ -25,10 +25,33 @@ read_file(Filename, List):-
 n(n(X), X):- !.
 n(X, n(X)).
 
-% Remove first apparition
 del([], _, []):- !.
 del([E|T], E, T):- !.
 del([H|T], E, [H|Out]):- del(T, E, Out).
+
+pure_clause(Clause, KB):-
+  member(Literal, Clause),
+  flatten(KB, KBLiterals),
+  n(Literal, NLiteral),
+  not(member(NLiteral, KBLiterals)),
+  !.
+
+tautology(Clause):-
+  member(E, Clause),
+  n(E, NE),
+  member(NE, Clause),
+  !.
+
+subsumed_clause(Clause, KB):-
+  member(KBClause, KB),
+  subset(KBClause, Clause),
+  !.
+
+should_add([], _):- !.
+should_add(Clause, KB):-
+  not(tautology(Clause)),
+  not(pure_clause(Clause, KB)),
+  not(subsumed_clause(Clause, KB)).
 
 resolve(Clause1, Clause2, Res):-
   member(E1, Clause1),
@@ -43,29 +66,70 @@ res(KB):-
   member([], KB),
   !.
 res(KB):-
-  nth0(I1, KB, Clause1),
-  nth0(I2, KB, Clause2),
+  nth0(I1, KB, HiddenClause1),
+  nth0(I2, KB, HiddenClause2),
+  copy_term(HiddenClause1, Clause1),
+  copy_term(HiddenClause2, Clause2),
   I2 > I1,
+  % write('RC1: '),
+  % print(Clause1),
+  % tab(1),
+  % write('RC2: '),
+  % print(Clause2),
+  % nl,
   resolve(Clause1, Clause2, Resolvent),
-  not(member(Resolvent, KB)),
+  % write(' P: '),
+  % print(KB),
+  % nl,
+  % write('C1: '),
+  % print(Clause1),
+  % nl,
+  % write('C2: '),
+  % print(Clause2),
+  % nl,
+  % write('RE: '),
+  % print(Resolvent),
+  % nl,
+  should_add(Resolvent, KB),
   append(KB, [Resolvent], NewKB),
-  res(NewKB),
-  write(' P: '),
-  print(KB),
-  nl,
-  write('KB: '),
-  print(NewKB),
-  nl,
-  write('C1: '),
-  print(Clause1),
-  nl,
-  write('C2: '),
-  print(Clause2),
-  nl,
-  write('RE: '),
-  print(Resolvent),
-  nl,
-  !.
+  % write('AC: '),
+  % print(Resolvent),
+  % nl,
+  % write('KB: '),
+  % print(NewKB),
+  % nl,
+  res(NewKB).
+  % write(' P: '),
+  % print(KB),
+  % nl,
+  % write('KB: '),
+  % print(NewKB),
+  % nl,
+  % write('C1: '),
+  % print(Clause1),
+  % nl,
+  % write('C2: '),
+  % print(Clause2),
+  % nl,
+  % write('RE: '),
+  % print(Resolvent),
+  % nl,
+  % nl.
 
-debug:-
-  read_case('input.txt', Case), !, seen, res(Case), !.
+solve([]).
+solve([Case|Rest]):-
+  res(Case),
+  write('UNSATISFIABLE'),
+  !,
+  nl,
+  solve(Rest).
+solve([_|Rest]):-
+  write('SATISFIABLE'),
+  nl,
+  solve(Rest).
+
+main:-
+  tell('output.txt'),
+  read_file('input.txt', KBs),
+  solve(KBs),
+  told.
