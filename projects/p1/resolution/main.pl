@@ -1,18 +1,3 @@
-% ----------- helpers -----------
-% dynamic rules
-% assert, asserta, assertz, retract
-% assert of rule => use (rule:-...)
-% name(X, [...])
-% functor(Term, F, N) -> F = functor name, N = arity
-% arg(N, Term, A) -> nth argument A, starting from 1
-% call(P) - gol dinamic cu variabile
-% repeat - force backtracking on failure using alternate branches
-% trace, notrace, spy(P), nospy(P) - P=predicate
-% var, nonvar, atom, integer, atomic
-% see(X), tell(X), seen, told, end_of_file
-% get, get0, put - character based
-% read, write, tab(N), nl
-% ----------- helpers -----------
 read_case(Filename, Case):-
   see(Filename),
   repeat,
