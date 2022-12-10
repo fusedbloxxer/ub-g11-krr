@@ -3,7 +3,6 @@
 [[n(a), b], [c, d], [n(d), b], [n(b)], [n(c), b], [e], [a, b, n(f), f]].
 [[n(b), a], [n(a), b, e], [a, n(e)], [n(a)], [e]].
 [[a, b], [n(a), n(b)], [c]].
-[[toddler], [n(toddler), child], [n(child), n(female), girl], [female], [girl], [n(infant), child], [n(child), n(male), boy]].
 [[toddler], [n(toddler), child], [n(child), n(female), girl], [female], [n(girl)], [n(infant), child], [n(child), n(male), boy]].
 [[rain, sun], [n(sun), mail], [n(rain), mail], [n(rain)], [n(sleet), mail], [rain]].
 [[n(hardWorker(sue))], [n(student(X)), hardWorker(X)], [n(gradStudent(X)), student(X)], [gradStudent(sue)]].
