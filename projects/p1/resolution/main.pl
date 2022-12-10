@@ -29,8 +29,8 @@ subsetOf([Elem|Rest], Set):-
   memberOf(Elem, Set).
 
 pure_clause(Clause, KB):-
-  member(Literal, Clause),
   flatten(KB, KBLiterals),
+  member(Literal, Clause),
   n(Literal, NLiteral),
   not(member(NLiteral, KBLiterals)),
   !.
@@ -42,11 +42,11 @@ tautology(Clause):-
   E1 == NE2,
   !.
 
-subsumed_clause(Clause, KB, vars):-
+subsumed_clause(Clause, KB, unify):-
   member(KBClause, KB),
   subset(KBClause, Clause),
   !.
-subsumed_clause(Clause, KB, prop):-
+subsumed_clause(Clause, KB, strict):-
   member(KBClause, KB),
   subsetOf(KBClause, Clause),
   !.
@@ -95,7 +95,7 @@ res_(KB):-
   % write('RE: '),
   % print(Resolvent),
   % nl,
-  should_add(Resolvent, KB, vars),
+  should_add(Resolvent, KB, unify),
   append(KB, [Resolvent], NewKB),
   % write('AC: '),
   % print(Resolvent),
@@ -111,33 +111,41 @@ res_(KB):-
   print(NewKB),
   nl,
   write('C1: '),
-  print(Clause1),
+  print(HiddenClause1),
   nl,
   write('C2: '),
-  print(Clause2),
+  print(HiddenClause2),
   nl,
   write('RE: '),
   print(Resolvent),
   nl,
   nl.
 
-keep([], OptimKB, OptimKB):-
+elim(KB, OptimKB):-
+  elim_(KB, [], PartialOptimKB),
+  not((subsetOf(KB, PartialOptimKB), subsetOf(PartialOptimKB, KB))),
+  elim(PartialOptimKB, OptimKB),
   !.
-keep([Clause|KB], OptimKB, Res):-
-  copy_term(Clause, CopyClause1),
+elim(KB, KB).
+
+elim_([], OptimKB, OptimKB):-
+  !.
+elim_([Clause|KB], OptimKB, Res):-
   append(KB, OptimKB, PartialKB),
-  should_add(Clause, PartialKB, prop),
-  keep(KB, [CopyClause1|OptimKB], Res),
+  should_add(Clause, PartialKB, strict),
+  elim_(KB, [Clause|OptimKB], Res),
   !.
-keep([_|KB], OptimKB, Res):-
-  keep(KB, OptimKB, Res),
+elim_([_|KB], OptimKB, Res):-
+  elim_(KB, OptimKB, Res),
   !.
 
 res(KB):-
   write('KB: '), write(KB), nl,
-  findall(UniqClause, (member(DupClause, KB), unique(DupClause, UniqClause)), UniqKB),
-  write('UniqueKB: '), write(UniqKB), nl,
-  keep(UniqKB, [], OptimKB),
+  bagof(UniqClause, DupClause^(member(DupClause, KB), unique(DupClause, UniqClause)), UniqClauseKB),
+  write('UniqClauseKB: '), write(UniqClauseKB), nl,
+  unique(UniqClauseKB, UniqKB),
+  write('UniqKB: '), write(UniqKB), nl,
+  elim(UniqKB, OptimKB),
   write('OptimKB: '), write(OptimKB), nl,
   res_(OptimKB).
 
