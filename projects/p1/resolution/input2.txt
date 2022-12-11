@@ -1,0 +1,10 @@
+[
+  [n(p(X)), n(r(X)), l(X), s(X)],
+  [n(p(X)), n(l(X)), c(X)],
+  [n(p(X)), n(c(X)), j(X)],
+  [n(p(X)), n(w(X)), s(X)],
+  [p(john)],
+  [r(john)],
+  [n(s(john))],
+  [n(p(X)), n(r(X)), n(j(X))]
+].

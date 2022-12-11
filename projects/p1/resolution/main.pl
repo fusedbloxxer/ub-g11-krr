@@ -117,7 +117,8 @@ elim_([_|KB], OptimKB, Res):-
 
 res(KB):-
   write('KB: '), write(KB), nl,
-  bagof(UniqClause, DupClause^(member(DupClause, KB), unique(DupClause, UniqClause)), UniqClauseKB),
+  bagof(UniqClause, DupClause^(member(DupClause, KB),
+    unique(DupClause, UniqClause)), UniqClauseKB),
   write('UniqClauseKB: '), write(UniqClauseKB), nl,
   unique(UniqClauseKB, UniqKB),
   write('UniqKB: '), write(UniqKB), nl,

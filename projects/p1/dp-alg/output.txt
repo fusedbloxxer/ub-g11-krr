@@ -4,4 +4,3 @@ NO
 NO
 YES - { e/true; b/true; f/true; }
 NO
-YES - { c/true; b/true; d/true; a/true; }
