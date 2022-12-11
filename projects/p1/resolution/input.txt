@@ -10,4 +10,4 @@
 [[n(hardWorker(sue))], [n(student(X)), hardWorker(X)], [n(gradStudent(X)), student(X)], [gradStudent(sue)]].
 [[n(on(X, Y)), n(green(X)), green(Y)], [on(a, b)], [green(a)], [on(b, c)], [n(green(c))]].
 [[z, f(X)], [a, f(X)], [n(a), n(z)], [f(X), f(X), f(Y)], [n(f(X))], [a, f(X)], [f(c)], [g, n(f(c))]].
-[[n(a)],[a,a,a,g(x),g(x),g(x)],[n(g(x))]].
+[[n(a)],[a, a, a, g(x), g(x), g(x)],[n(g(x))]].

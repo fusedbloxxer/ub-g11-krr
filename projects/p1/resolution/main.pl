@@ -76,33 +76,9 @@ res_(KB):-
   I2 > I1,
   copy_term(HiddenClause1, Clause1),
   copy_term(HiddenClause2, Clause2),
-  % write('RC1: '),
-  % print(Clause1),
-  % tab(1),
-  % write('RC2: '),
-  % print(Clause2),
-  % nl,
   resolve(Clause1, Clause2, Resolvent),
-  % write(' P: '),
-  % print(KB),
-  % nl,
-  % write('C1: '),
-  % print(Clause1),
-  % nl,
-  % write('C2: '),
-  % print(Clause2),
-  % nl,
-  % write('RE: '),
-  % print(Resolvent),
-  % nl,
   should_add(Resolvent, KB, unify),
   append(KB, [Resolvent], NewKB),
-  % write('AC: '),
-  % print(Resolvent),
-  % nl,
-  % write('KB: '),
-  % print(NewKB),
-  % nl,
   res_(NewKB),
   write(' P: '),
   print(KB),
@@ -149,20 +125,30 @@ res(KB):-
   write('OptimKB: '), write(OptimKB), nl,
   res_(OptimKB).
 
-solve([]).
-solve([Case|Rest]):-
+solve([], []).
+solve([Case|Rest], ['UNSAT'|Sol]):-
   res(Case),
-  !,
   write('UNSATISFIABLE'),
   nl,
-  solve(Rest).
-solve([_|Rest]):-
+  solve(Rest, Sol),
+  !.
+solve([_|Rest], ['SAT'|Sol]):-
+  !,
   write('SATISFIABLE'),
   nl,
-  solve(Rest).
+  solve(Rest, Sol).
+
+write_sol([]).
+write_sol([Entry|Sol]):-
+  write(Entry),
+  nl,
+  write_sol(Sol).
+write_file(Filename, Sol):-
+  tell(Filename),
+  write_sol(Sol),
+  told.
 
 main:-
-  % tell('output.txt'),
   read_file('input.txt', KBs),
-  solve(KBs).
-  % told.
+  solve(KBs, Sol),
+  write_file('output.txt', Sol).
