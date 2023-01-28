@@ -1,0 +1,1 @@
+[[n(plus(X,Y,Z)),plus(succ(X),Y,succ(Z))],[plus(zero,X,X)],[n(plus(succ(succ(zero)),succ(succ(succ(zero))),U))]].

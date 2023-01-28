@@ -79,6 +79,8 @@ res_(KB):-
   resolve(Clause1, Clause2, Resolvent),
   should_add(Resolvent, KB, unify),
   append(KB, [Resolvent], NewKB),
+  % length(NewKB, L),
+  % write(L), nl,
   res_(NewKB),
   write(' P: '),
   print(KB),
@@ -150,6 +152,6 @@ write_file(Filename, Sol):-
   told.
 
 main:-
-  read_file('input.txt', KBs),
+  read_file('input4.txt', KBs),
   solve(KBs, Sol),
   write_file('output.txt', Sol).

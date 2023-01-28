@@ -1,6 +1,2 @@
 YES - { child/true; female/true; boy/true; toddler/true; girl/true; }
-NO
-NO
-NO
 YES - { e/true; b/true; f/true; }
-NO
