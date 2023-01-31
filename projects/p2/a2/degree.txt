@@ -1,0 +1,50 @@
+degree_service_poor(X, Y) :- X < 0, !, fail.
+degree_service_poor(X, Y) :- X =< 4, !, max_list([0.0, -0.25 * X + 1.00], Y0), min_list([1.0, Y0], Y).
+degree_service_poor(X, Y) :- X =< 10, !, max_list([0.0, 0.00 * X + 0.00], Y0), min_list([1.0, Y0], Y).
+degree_service_poor(X, Y) :- fail.
+
+degree_service_good(X, Y) :- X < 0, !, fail.
+degree_service_good(X, Y) :- X =< 1.5, !, max_list([0.0, 0.00 * X + 0.00], Y0), min_list([1.0, Y0], Y).
+degree_service_good(X, Y) :- X =< 4.5, !, max_list([0.0, 0.33 * X + -0.50], Y0), min_list([1.0, Y0], Y).
+degree_service_good(X, Y) :- X =< 7.5, !, max_list([0.0, 0.00 * X + 1.00], Y0), min_list([1.0, Y0], Y).
+degree_service_good(X, Y) :- X =< 8.5, !, max_list([0.0, -1.00 * X + 8.50], Y0), min_list([1.0, Y0], Y).
+degree_service_good(X, Y) :- X =< 10, !, max_list([0.0, 0.00 * X + 0.00], Y0), min_list([1.0, Y0], Y).
+degree_service_good(X, Y) :- fail.
+
+degree_service_excellent(X, Y) :- X < 0, !, fail.
+degree_service_excellent(X, Y) :- X =< 5, !, max_list([0.0, 0.00 * X + 0.00], Y0), min_list([1.0, Y0], Y).
+degree_service_excellent(X, Y) :- X =< 9, !, max_list([0.0, 0.25 * X + -1.25], Y0), min_list([1.0, Y0], Y).
+degree_service_excellent(X, Y) :- X =< 10, !, max_list([0.0, 0.00 * X + 1.00], Y0), min_list([1.0, Y0], Y).
+degree_service_excellent(X, Y) :- fail.
+
+degree_food_rancid(X, Y) :- X < 0, !, fail.
+degree_food_rancid(X, Y) :- X =< 4, !, max_list([0.0, 0.00 * X + 1.00], Y0), min_list([1.0, Y0], Y).
+degree_food_rancid(X, Y) :- X =< 6, !, max_list([0.0, -0.50 * X + 3.00], Y0), min_list([1.0, Y0], Y).
+degree_food_rancid(X, Y) :- X =< 10, !, max_list([0.0, 0.00 * X + 0.00], Y0), min_list([1.0, Y0], Y).
+degree_food_rancid(X, Y) :- fail.
+
+degree_food_delicious(X, Y) :- X < 0, !, fail.
+degree_food_delicious(X, Y) :- X =< 6.5, !, max_list([0.0, 0.00 * X + 0.00], Y0), min_list([1.0, Y0], Y).
+degree_food_delicious(X, Y) :- X =< 8, !, max_list([0.0, 0.50 * X + -3.25], Y0), min_list([1.0, Y0], Y).
+degree_food_delicious(X, Y) :- X =< 9, !, max_list([0.0, 0.25 * X + -1.25], Y0), min_list([1.0, Y0], Y).
+degree_food_delicious(X, Y) :- X =< 10, !, max_list([0.0, 0.00 * X + 1.00], Y0), min_list([1.0, Y0], Y).
+degree_food_delicious(X, Y) :- fail.
+
+degree_tip_cheap(X, Y) :- X < 0, !, fail.
+degree_tip_cheap(X, Y) :- X =< 5, !, max_list([0.0, 0.00 * X + 1.00], Y0), min_list([1.0, Y0], Y).
+degree_tip_cheap(X, Y) :- X =< 9, !, max_list([0.0, -0.25 * X + 2.25], Y0), min_list([1.0, Y0], Y).
+degree_tip_cheap(X, Y) :- X =< 25, !, max_list([0.0, 0.00 * X + 0.00], Y0), min_list([1.0, Y0], Y).
+degree_tip_cheap(X, Y) :- fail.
+
+degree_tip_normal(X, Y) :- X < 0, !, fail.
+degree_tip_normal(X, Y) :- X =< 6.25, !, max_list([0.0, 0.00 * X + 0.00], Y0), min_list([1.0, Y0], Y).
+degree_tip_normal(X, Y) :- X =< 12.5, !, max_list([0.0, 0.16 * X + -1.00], Y0), min_list([1.0, Y0], Y).
+degree_tip_normal(X, Y) :- X =< 18.75, !, max_list([0.0, -0.16 * X + 3.00], Y0), min_list([1.0, Y0], Y).
+degree_tip_normal(X, Y) :- X =< 25, !, max_list([0.0, 0.00 * X + 0.00], Y0), min_list([1.0, Y0], Y).
+degree_tip_normal(X, Y) :- fail.
+
+degree_tip_generous(X, Y) :- X < 0, !, fail.
+degree_tip_generous(X, Y) :- X =< 12.5, !, max_list([0.0, 0.00 * X + 0.00], Y0), min_list([1.0, Y0], Y).
+degree_tip_generous(X, Y) :- X =< 20, !, max_list([0.0, 0.13 * X + -1.67], Y0), min_list([1.0, Y0], Y).
+degree_tip_generous(X, Y) :- X =< 25, !, max_list([0.0, 0.00 * X + 1.00], Y0), min_list([1.0, Y0], Y).
+degree_tip_generous(X, Y) :- fail.
