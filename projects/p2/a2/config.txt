@@ -1,1 +1,1 @@
-[service, food].
+[service/in, food/in, tip/out].

@@ -1,87 +1,15 @@
 :-dynamic
-  degree_service_poor/2,
-  degree_service_good/2,
-  degree_service_excellent/2,
-  degree_food_rancid/2,
-  degree_food_delicious/2,
-  degree_tip_cheap/2,
-  degree_tip_normal/2,
-  degree_tip_generous/2,
-  user_input/2,
-  user_rule/3,
-  eval_consequent/3.
+  eval_consequent/3,
+  domain/2.
 
 
-pair2degree(Pair, OutDegreeCurve):-
-  not(is_list(Pair)),
-  !,
-  FunBase/Predicate = Pair,
-  atomic_list_concat([degree, FunBase, Predicate], '_', OutDegreeCurve).
-pair2degree([], []).
-pair2degree([Pair|PairTail], [OutDegreeCurve|Rest]):-
-  pair2degree(Pair, OutDegreeCurve),
-  pair2degree(PairTail, Rest).
-
-
-read_user_input:-
-  (
-    user_input(UserInputKey, _),
-    write(UserInputKey), write('='), read(UserInputValue),
-    (UserInputValue == stop -> clean_on_exit; true),
-    retract(user_input(UserInputKey, _)),
-    assertz(user_input(UserInputKey, UserInputValue)),
-    fail
-  ) ; true.
-insert_user_inputs(FilePath):-
-  see(FilePath),
-  read(InputList),
-  seen,
-  ((member(X, InputList), assertz(user_input(X, null)), fail); true).
-remove_user_inputs:-
-  retractall(user_input(_, _)).
-
-
-read_user_rules(RuleList):-
-  findall([X, Y, Z], user_rule(X, Y, Z), RuleList).
-insert_user_rules(FilePath):-
-  see(FilePath),
-  repeat,
-  read(InputList),
-  (
-    InputList \== end_of_file ->
-    (
-      [Op, Ant, Con] = InputList,
-      pair2degree(Ant, DegreeCurveAnt),
-      pair2degree(Con, DegreecurveCon),
-      assertz(user_rule(Op, DegreeCurveAnt, DegreecurveCon)),
-      fail
-    ) ; (!, true)
-  ),
-  seen.
-remove_user_rules:-
-  retractall(user_rule(_, _, _)).
-
-
-insert_degree_curves(FilePath):-
-  see(FilePath),
-  repeat,
-  read(DegreeCurve),
-  (DegreeCurve \== end_of_file -> (assertz(DegreeCurve), fail); (!, true)),
-  seen.
-remove_degree_curves:- % TODO: refactor this!
-  retractall(degree_service_poor(_, _)),
-  retractall(degree_service_good(_, _)),
-  retractall(degree_service_excellent(_, _)),
-  retractall(degree_food_rancid(_, _)),
-  retractall(degree_food_delicious(_, _)),
-  retractall(degree_tip_cheap(_, _)),
-  retractall(degree_tip_normal(_, _)),
-  retractall(degree_tip_generous(_, _)).
+:-include('./utils.pl').
+:-include('./io.pl').
 
 
 transform_input(AntDegreeCurve, Membership):-
   atomic_list_concat([degree, Input, _], '_', AntDegreeCurve),
-  user_input(Input, Value),
+  user_input(Input, in, Value),
   call(AntDegreeCurve, Value, Membership).
 transform_input_item(Rule, OutMembership):-
   [Op, AntDegreeCurves, ConDegreeCurve] = Rule,
@@ -111,16 +39,55 @@ evaluate_consequents_item(Rule, OutRule):-
   OutRule = ConPred.
 evaluate_consequents_list(RuleList, OutRuleList):-
   maplist(evaluate_consequents_item, RuleList, OutRuleList).
-remove_eval_consequents:-
-  retractall(eval_consequent(_, _, _)).
 
 
 aggregate_consequents(X, Y):-
-  write('help'), nl,
-  findall(X/Consequent/Z, eval_consequent(Consequent, X, Z), ConsequentsOutputHelper),
+  findall(X -> Consequent -> Z, eval_consequent(Consequent, X, Z), E),
   findall(Z, eval_consequent(Consequent, X, Z), ConsequentsOutputs),
-  write(ConsequentsOutputHelper), nl,
-  max_list(ConsequentsOutputs, Y).
+  max_list(ConsequentsOutputs, Y),
+  log_format('max = ~2f: ', [Y]),
+  write(E),
+  nl.
+
+
+defuzzify(Count, CentroidX):-
+  domain(Start, End),
+  intervals(Start, End, Count, PointsX),
+  maplist(aggregate_consequents, PointsX, PointsY),
+  maplist(multiply, PointsX, PointsY, Xs),
+  maplist(multiply, PointsY, PointsY, Ys),
+  sum_list(PointsY, SumY),
+  sum_list(Xs, X),
+  sum_list(Ys, Y),
+  CentroidX is X / (SumY + 1e-12),
+  CentroidY is Y / (SumY + 1e-12),
+  log_format('PointsX  = '), write(PointsX), nl,
+  log_format('PointsY  = '), write(PointsY), nl,
+  log_format('Xs       = '), write(Xs), nl,
+  log_format('Ys       = '), write(Ys), nl,
+  log_format('Centroid = (~2f, ~2f)', [CentroidX, CentroidY]), nl.
+
+
+solve(RuleList):-
+  log_format('--> Read Rules'), nl,
+  log_rule_list(RuleList), nl,
+  log_format('--> Transform Input'), nl,
+  transform_input_list(RuleList, AntMembership),
+  log_rule_list(AntMembership), nl,
+  log_format('--> Evaluate Antecedents'), nl,
+  evaluate_antecedents_list(AntMembership, EvalAnt),
+  log_rule_list(EvalAnt), nl,
+  log_format('--> Evaluate Consequents'), nl,
+  evaluate_consequents_list(EvalAnt, _),
+  listing(eval_consequent),
+  log_format('--> Aggregate Consequents (Predicate)'), nl,
+  listing(aggregate_consequents),
+  log_format('--> Aggregate Consequents + Defuzzify'), nl,
+  defuzzify(10, Ans),
+  log_format('--> Answer'), nl,
+  user_input(Name, out, _),
+  format('~s = ~2f', [Name, Ans]), nl,
+  retractall(eval_consequent(_, _, _)).
 
 
 main:-
@@ -137,27 +104,7 @@ main(UserConfigFile, DegreeCurveFile, RulesFile):-
   insert_user_inputs(UserConfigFile),
   insert_user_rules(RulesFile),
   read_user_rules(RuleList),
-  % repeat,
+  repeat,
   read_user_input,
-  transform_input_list(RuleList, TransformedInput),
-  evaluate_antecedents_list(TransformedInput, Applicability),
-  evaluate_consequents_list(Applicability, Threshold),
-
-  listing,
-  write(         RuleList), nl,
-  write( TransformedInput), nl,
-  write(    Applicability), nl,
-  write(        Threshold), nl,
-  listing(eval_consequent), nl.
-
-  % fail,
-  % clean_on_exit.
-
-
-clean_on_exit:-
-  remove_eval_consequents,
-  remove_user_rules,
-  remove_user_inputs,
-  remove_degree_curves.
-  % halt.
-
+  solve(RuleList),
+  fail.

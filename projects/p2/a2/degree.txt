@@ -1,3 +1,5 @@
+domain(0, 25).
+
 degree_service_poor(X, Y) :- X < 0, !, fail.
 degree_service_poor(X, Y) :- X =< 4, !, max_list([0.0, -0.25 * X + 1.00], Y0), min_list([1.0, Y0], Y).
 degree_service_poor(X, Y) :- X =< 10, !, max_list([0.0, 0.00 * X + 0.00], Y0), min_list([1.0, Y0], Y).
