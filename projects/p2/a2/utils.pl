@@ -10,25 +10,16 @@ iterate(Start, End, Step, [Start|Rest]):-
   iterate(Next, End, Step, Rest).
 
 
-centers([], []):-
-  !.
-centers([_], []):-
-  !.
-centers([P0, P1|InRest], [P2|OutRest]):-
-  P2 is (P1 + P0) / 2.0,
-  centers([P1|InRest], OutRest).
-
-
-multiply(X_i, Y_i, Z_i):-
-  Z_i is X_i * Y_i.
-
-
 intervals(_, _, 0, _):-
   !,
   fail.
 intervals(Start, End, Count, OutPoints):-
   StepSize is (End - Start) / Count,
   iterate(Start, End, StepSize, OutPoints).
+
+
+multiply(X_i, Y_i, Z_i):-
+  Z_i is X_i * Y_i.
 
 
 avg_list(InputList, OutAvg):-
