@@ -1,5 +1,6 @@
 :-dynamic
   n/1,
+  is_big/0,
   can_fly/0,
   has_sharp_claws/0,
   has_colorful_feathers/0,
@@ -13,7 +14,24 @@
 :-include('./io.pl').
 
 
-% backward_chaining(KBRules, Qs).
+backward_chaining(_, Goals):-
+  length(Goals, Len),
+  Len =:= 0,
+  !.
+backward_chaining(KBRules, Goals):-
+  [[G1] | _] = Goals,
+  delete(Goals, [G1], OtherGoals),
+  member(Rule, KBRules),
+  member(G1, Rule),
+  delete(Rule, G1, Negatives),
+  maplist(n, Negatives, Positives_),
+  maplist(wrap, Positives_, Positives),
+  append(Positives, OtherGoals, Goals__),
+  list_to_set(Goals__, Goals_),
+  backward_chaining(KBRules, Goals_),
+  format('Goal = ~s', G1), nl,
+  write('Rule = '), write(Rule), nl,
+  write('Goals = '), write(Goals_), nl, nl.
 
 
 can_mark(Marked, Clause, Marked_):-
@@ -25,7 +43,6 @@ can_mark(Marked, Clause, Marked_):-
   maplist(n, Negatives, Positives),
   subset(Positives, Marked),
   union(Marked, [E], Marked_).
-
 forward_chaining_(_, Goals, Marked):-
   flatten(Goals, Goals_),
   subset(Goals_, Marked),
@@ -49,7 +66,7 @@ solve(_, _, _, 'NO').
 
 
 main:-
-  main(forward_chaining).
+  main(backward_chaining).
 main(Algorithm):-
   main(Algorithm, './input.txt').
 main(Algorithm, RulesFile):-

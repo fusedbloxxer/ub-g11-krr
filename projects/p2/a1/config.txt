@@ -1,2 +1,2 @@
 [can_fly, has_sharp_claws, has_colorful_feathers, is_big].
-[[scary], [migratory_bird]].
+[[migratory_bird], [scary]].
