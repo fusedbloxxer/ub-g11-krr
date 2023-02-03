@@ -1,0 +1,4 @@
+[n(has_sharp_claws), n(can_fly), predator].
+[n(has_colorful_feathers), migratory_bird].
+[n(predator), n(migratory_bird), hawk].
+[n(is_big), scary].
