@@ -1,4 +1,5 @@
-[n(has_sharp_claws), n(can_fly), predator].
-[n(has_colorful_feathers), migratory_bird].
-[n(predator), n(migratory_bird), hawk].
-[n(is_big), scary].
+[n(plays), does_not_work].
+[n(boss_is_unhappy), performance_is_bad].
+[n(misses_deadlines), performance_is_bad].
+[n(does_not_work), n(has_tasks), procrastinates].
+[n(procrastinates), n(performance_is_bad), is_fired].

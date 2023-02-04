@@ -1,17 +1,63 @@
 :-dynamic
   n/1,
-  is_big/0,
-  can_fly/0,
-  has_sharp_claws/0,
-  has_colorful_feathers/0,
+  plays/0,
+  has_tasks/0,
+  boss_is_unhappy/0,
+  misses_deadlines/0,
   user_rule/1,
   user_input/1,
   is_marked/1,
   user_question/1.
 
 
-:-include('./utils.pl').
-:-include('./io.pl').
+insert_user_input(Filepath):-
+  see(Filepath),
+  read(Input),
+  ((member(Field, Input), assertz(user_input(Field)), fail); true),
+  read(Question),
+  assertz(user_question(Question)),
+  seen.
+read_user_input:-
+  (
+    user_input(Field),
+    format('~s: ', [Field]),
+    read(Value),
+    (Value == stop -> halt; true),
+    (Value == yes -> assertz(Field); assertz(n(Field))),
+    fail
+  ) ; true.
+remove_user_input:-
+  list_user_input(InputList),
+  ((member(Input, InputList), retract(Input), fail); true).
+list_user_input(InputList):-
+  findall(R, (user_input(Field), ((Field, R=Field); (n(Field), R=n(Field)))), InputList).
+
+
+insert_user_rules(Filepath):-
+  see(Filepath),
+  repeat,
+  read(Rule),
+  (Rule \== end_of_file -> (assertz(user_rule(Rule)), fail) ; !, true),
+  seen.
+list_user_rules(Rules):-
+  findall(Rule, user_rule(Rule), Rules).
+
+
+wrap(X, [X]).
+compose_rules(UserInput, UserRules, Rules):-
+  maplist(wrap, UserInput, WrappedUserInput),
+  append(WrappedUserInput, UserRules, Rules).
+
+
+n(n(Literal), Literal):-
+  !.
+n(Literal, n(Literal)).
+
+
+neg(X):-
+  X = n(_).
+pos(X):-
+  not(neg(X)).
 
 
 backward_chaining(_, Goals):-

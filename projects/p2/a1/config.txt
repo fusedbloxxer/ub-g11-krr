@@ -1,2 +1,2 @@
-[can_fly, has_sharp_claws, has_colorful_feathers, is_big].
-[[migratory_bird], [scary]].
+[plays, has_tasks, boss_is_unhappy, misses_deadlines].
+[[is_fired], [boss_is_unhappy]].
