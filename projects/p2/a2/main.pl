@@ -163,7 +163,7 @@ aggregate_consequents(X, Y):-
   nl.
 
 
-defuzzify(Count, CentroidX):-
+defuzzify(Count, WAvg):-
   domain(Start, End),
   intervals(Start, End, Count, PointsX),
   maplist(aggregate_consequents, PointsX, PointsY),
@@ -172,12 +172,12 @@ defuzzify(Count, CentroidX):-
   sum_list(PointsY, SumY),
   sum_list(Xs, X),
   sum_list(Ys, Y),
-  CentroidX is X / (SumY + 1e-12),
+  WAvg is X / (SumY + 1e-12),
   log_format('PointsX  = '), write(PointsX), nl,
   log_format('PointsY  = '), write(PointsY), nl,
   log_format('Xs       = '), write(Xs), nl,
   log_format('Ys       = '), write(Ys), nl,
-  log_format('x_centroid = ~4f', [CentroidX]), nl.
+  log_format('w_avg    = ~4f', [WAvg]), nl.
 
 
 solve(RuleList):-

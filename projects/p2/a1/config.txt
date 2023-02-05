@@ -1,2 +1,2 @@
 [plays, has_tasks, boss_is_unhappy, misses_deadlines].
-[[is_fired], [boss_is_unhappy]].
+[[is_fired]].
