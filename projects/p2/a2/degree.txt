@@ -1,52 +1,89 @@
-domain(0, 25).
+domain(0, 100).
 
-degree_service_poor(X, Y) :- X < 0, !, fail.
-degree_service_poor(X, Y) :- X =< 4, !, max_list([0.0, -0.25 * X + 1.00], Y0), min_list([1.0, Y0], Y).
-degree_service_poor(X, Y) :- X =< 10, !, max_list([0.0, 0.00 * X + 0.00], Y0), min_list([1.0, Y0], Y).
-degree_service_poor(X, Y) :- fail.
 
-degree_service_good(X, Y) :- X < 0, !, fail.
-degree_service_good(X, Y) :- X =< 1.5, !, max_list([0.0, 0.00 * X + 0.00], Y0), min_list([1.0, Y0], Y).
-degree_service_good(X, Y) :- X =< 4.5, !, max_list([0.0, 0.33 * X + -0.50], Y0), min_list([1.0, Y0], Y).
-degree_service_good(X, Y) :- X =< 7.5, !, max_list([0.0, 0.00 * X + 1.00], Y0), min_list([1.0, Y0], Y).
-degree_service_good(X, Y) :- X =< 8.5, !, max_list([0.0, -1.00 * X + 8.50], Y0), min_list([1.0, Y0], Y).
-degree_service_good(X, Y) :- X =< 10, !, max_list([0.0, 0.00 * X + 0.00], Y0), min_list([1.0, Y0], Y).
-degree_service_good(X, Y) :- fail.
+degree_day_busy(X, Y) :- X < 0, !, fail.
+degree_day_busy(X, Y) :- X =< 1.25, !, max_list([0.0, 0.000000e+00 * X + 0.000000e+00], Y0), min_list([1.0, Y0], Y).
+degree_day_busy(X, Y) :- X =< 2.5, !, max_list([0.0, 5.000000e-02 * X + -6.250000e-02], Y0), min_list([1.0, Y0], Y).
+degree_day_busy(X, Y) :- X =< 3.125, !, max_list([0.0, 1.000000e-01 * X + -1.875000e-01], Y0), min_list([1.0, Y0], Y).
+degree_day_busy(X, Y) :- X =< 3.75, !, max_list([0.0, 2.000000e-01 * X + -5.000000e-01], Y0), min_list([1.0, Y0], Y).
+degree_day_busy(X, Y) :- X =< 5, !, max_list([0.0, 1.000000e-01 * X + -1.250000e-01], Y0), min_list([1.0, Y0], Y).
+degree_day_busy(X, Y) :- X =< 6.25, !, max_list([0.0, 1.000000e-01 * X + -1.250000e-01], Y0), min_list([1.0, Y0], Y).
+degree_day_busy(X, Y) :- X =< 7.5, !, max_list([0.0, 2.000000e-01 * X + -7.500000e-01], Y0), min_list([1.0, Y0], Y).
+degree_day_busy(X, Y) :- X =< 8.125, !, max_list([0.0, 1.000000e-01 * X + -7.105427e-15], Y0), min_list([1.0, Y0], Y).
+degree_day_busy(X, Y) :- X =< 10, !, max_list([0.0, 1.000000e-01 * X + -1.998401e-14], Y0), min_list([1.0, Y0], Y).
+degree_day_busy(X, Y) :- fail.
 
-degree_service_excellent(X, Y) :- X < 0, !, fail.
-degree_service_excellent(X, Y) :- X =< 5, !, max_list([0.0, 0.00 * X + 0.00], Y0), min_list([1.0, Y0], Y).
-degree_service_excellent(X, Y) :- X =< 9, !, max_list([0.0, 0.25 * X + -1.25], Y0), min_list([1.0, Y0], Y).
-degree_service_excellent(X, Y) :- X =< 10, !, max_list([0.0, 0.00 * X + 1.00], Y0), min_list([1.0, Y0], Y).
-degree_service_excellent(X, Y) :- fail.
+degree_day_average(X, Y) :- X < 0, !, fail.
+degree_day_average(X, Y) :- X =< 0.625, !, max_list([0.0, 2.000000e-01 * X + 0.000000e+00], Y0), min_list([1.0, Y0], Y).
+degree_day_average(X, Y) :- X =< 1.875, !, max_list([0.0, 1.000000e-01 * X + 6.250000e-02], Y0), min_list([1.0, Y0], Y).
+degree_day_average(X, Y) :- X =< 3.125, !, max_list([0.0, 1.000000e-01 * X + 6.250000e-02], Y0), min_list([1.0, Y0], Y).
+degree_day_average(X, Y) :- X =< 3.75, !, max_list([0.0, 2.000000e-01 * X + -2.500000e-01], Y0), min_list([1.0, Y0], Y).
+degree_day_average(X, Y) :- X =< 5, !, max_list([0.0, 4.000000e-01 * X + -1.000000e+00], Y0), min_list([1.0, Y0], Y).
+degree_day_average(X, Y) :- X =< 6.25, !, max_list([0.0, -2.000000e-01 * X + 2.000000e+00], Y0), min_list([1.0, Y0], Y).
+degree_day_average(X, Y) :- X =< 6.875, !, max_list([0.0, -2.000000e-01 * X + 2.000000e+00], Y0), min_list([1.0, Y0], Y).
+degree_day_average(X, Y) :- X =< 7.5, !, max_list([0.0, -4.000000e-01 * X + 3.375000e+00], Y0), min_list([1.0, Y0], Y).
+degree_day_average(X, Y) :- X =< 10, !, max_list([0.0, -1.500000e-01 * X + 1.500000e+00], Y0), min_list([1.0, Y0], Y).
+degree_day_average(X, Y) :- fail.
 
-degree_food_rancid(X, Y) :- X < 0, !, fail.
-degree_food_rancid(X, Y) :- X =< 4, !, max_list([0.0, 0.00 * X + 1.00], Y0), min_list([1.0, Y0], Y).
-degree_food_rancid(X, Y) :- X =< 6, !, max_list([0.0, -0.50 * X + 3.00], Y0), min_list([1.0, Y0], Y).
-degree_food_rancid(X, Y) :- X =< 10, !, max_list([0.0, 0.00 * X + 0.00], Y0), min_list([1.0, Y0], Y).
-degree_food_rancid(X, Y) :- fail.
+degree_day_free(X, Y) :- X < 0, !, fail.
+degree_day_free(X, Y) :- X =< 2.5, !, max_list([0.0, -1.500000e-01 * X + 1.000000e+00], Y0), min_list([1.0, Y0], Y).
+degree_day_free(X, Y) :- X =< 3.75, !, max_list([0.0, -3.000000e-01 * X + 1.375000e+00], Y0), min_list([1.0, Y0], Y).
+degree_day_free(X, Y) :- X =< 4.375, !, max_list([0.0, -2.000000e-01 * X + 1.000000e+00], Y0), min_list([1.0, Y0], Y).
+degree_day_free(X, Y) :- X =< 5, !, max_list([0.0, -2.000000e-01 * X + 1.000000e+00], Y0), min_list([1.0, Y0], Y).
+degree_day_free(X, Y) :- X =< 10, !, max_list([0.0, 0.000000e+00 * X + 0.000000e+00], Y0), min_list([1.0, Y0], Y).
+degree_day_free(X, Y) :- fail.
 
-degree_food_delicious(X, Y) :- X < 0, !, fail.
-degree_food_delicious(X, Y) :- X =< 6.5, !, max_list([0.0, 0.00 * X + 0.00], Y0), min_list([1.0, Y0], Y).
-degree_food_delicious(X, Y) :- X =< 8, !, max_list([0.0, 0.50 * X + -3.25], Y0), min_list([1.0, Y0], Y).
-degree_food_delicious(X, Y) :- X =< 9, !, max_list([0.0, 0.25 * X + -1.25], Y0), min_list([1.0, Y0], Y).
-degree_food_delicious(X, Y) :- X =< 10, !, max_list([0.0, 0.00 * X + 1.00], Y0), min_list([1.0, Y0], Y).
-degree_food_delicious(X, Y) :- fail.
 
-degree_tip_cheap(X, Y) :- X < 0, !, fail.
-degree_tip_cheap(X, Y) :- X =< 5, !, max_list([0.0, 0.00 * X + 1.00], Y0), min_list([1.0, Y0], Y).
-degree_tip_cheap(X, Y) :- X =< 9, !, max_list([0.0, -0.25 * X + 2.25], Y0), min_list([1.0, Y0], Y).
-degree_tip_cheap(X, Y) :- X =< 25, !, max_list([0.0, 0.00 * X + 0.00], Y0), min_list([1.0, Y0], Y).
-degree_tip_cheap(X, Y) :- fail.
+degree_sleep_poor(X, Y) :- X < 0, !, fail.
+degree_sleep_poor(X, Y) :- X =< 1.0, !, max_list([0.0, 0.000000e+00 * X + 1.000000e+00], Y0), min_list([1.0, Y0], Y).
+degree_sleep_poor(X, Y) :- X =< 2.25, !, max_list([0.0, -2.000000e-01 * X + 1.200000e+00], Y0), min_list([1.0, Y0], Y).
+degree_sleep_poor(X, Y) :- X =< 2.5, !, max_list([0.0, -2.500000e+00 * X + 6.375000e+00], Y0), min_list([1.0, Y0], Y).
+degree_sleep_poor(X, Y) :- X =< 2.75, !, max_list([0.0, -5.000000e-01 * X + 1.375000e+00], Y0), min_list([1.0, Y0], Y).
+degree_sleep_poor(X, Y) :- X =< 5, !, max_list([0.0, 0.000000e+00 * X + 0.000000e+00], Y0), min_list([1.0, Y0], Y).
+degree_sleep_poor(X, Y) :- fail.
 
-degree_tip_normal(X, Y) :- X < 0, !, fail.
-degree_tip_normal(X, Y) :- X =< 6.25, !, max_list([0.0, 0.00 * X + 0.00], Y0), min_list([1.0, Y0], Y).
-degree_tip_normal(X, Y) :- X =< 12.5, !, max_list([0.0, 0.16 * X + -1.00], Y0), min_list([1.0, Y0], Y).
-degree_tip_normal(X, Y) :- X =< 18.75, !, max_list([0.0, -0.16 * X + 3.00], Y0), min_list([1.0, Y0], Y).
-degree_tip_normal(X, Y) :- X =< 25, !, max_list([0.0, 0.00 * X + 0.00], Y0), min_list([1.0, Y0], Y).
-degree_tip_normal(X, Y) :- fail.
+degree_sleep_ok(X, Y) :- X < 0.0, !, fail.
+degree_sleep_ok(X, Y) :- X =< 0.625, !, max_list([0.0, 2.000000e-01 * X + 0.000000e+00], Y0), min_list([1.0, Y0], Y).
+degree_sleep_ok(X, Y) :- X =< 0.25, !, max_list([0.0, -8.000000e-03 * X + 1.300000e-01], Y0), min_list([1.0, Y0], Y).
+degree_sleep_ok(X, Y) :- X =< 0.875, !, max_list([0.0, 2.752000e-01 * X + 5.920000e-02], Y0), min_list([1.0, Y0], Y).
+degree_sleep_ok(X, Y) :- X =< 1.15, !, max_list([0.0, 2.727273e-01 * X + 6.136364e-02], Y0), min_list([1.0, Y0], Y).
+degree_sleep_ok(X, Y) :- X =< 2.125, !, max_list([0.0, 4.943590e-01 * X + -1.935128e-01], Y0), min_list([1.0, Y0], Y).
+degree_sleep_ok(X, Y) :- X =< 2.335, !, max_list([0.0, 2.047619e-01 * X + 4.218810e-01], Y0), min_list([1.0, Y0], Y).
+degree_sleep_ok(X, Y) :- X =< 2.5, !, max_list([0.0, 6.060606e-01 * X + -5.151515e-01], Y0), min_list([1.0, Y0], Y).
+degree_sleep_ok(X, Y) :- X =< 3.375, !, max_list([0.0, 1.776357e-15 * X + 1.000000e+00], Y0), min_list([1.0, Y0], Y).
+degree_sleep_ok(X, Y) :- X =< 3.5, !, max_list([0.0, -7.000000e+00 * X + 2.462500e+01], Y0), min_list([1.0, Y0], Y).
+degree_sleep_ok(X, Y) :- X =< 3.75, !, max_list([0.0, -5.000000e-01 * X + 1.875000e+00], Y0), min_list([1.0, Y0], Y).
+degree_sleep_ok(X, Y) :- X =< 5, !, max_list([0.0, 0.000000e+00 * X + 0.000000e+00], Y0), min_list([1.0, Y0], Y).
+degree_sleep_ok(X, Y) :- fail.
 
-degree_tip_generous(X, Y) :- X < 0, !, fail.
-degree_tip_generous(X, Y) :- X =< 12.5, !, max_list([0.0, 0.00 * X + 0.00], Y0), min_list([1.0, Y0], Y).
-degree_tip_generous(X, Y) :- X =< 20, !, max_list([0.0, 0.13 * X + -1.67], Y0), min_list([1.0, Y0], Y).
-degree_tip_generous(X, Y) :- X =< 25, !, max_list([0.0, 0.00 * X + 1.00], Y0), min_list([1.0, Y0], Y).
-degree_tip_generous(X, Y) :- fail.
+degree_sleep_excellent(X, Y) :- X < 0.0, !, fail.
+degree_sleep_excellent(X, Y) :- X =< 3.35, !, max_list([0.0, 3.432836e-02 * X + 0.000000e+00], Y0), min_list([1.0, Y0], Y).
+degree_sleep_excellent(X, Y) :- X =< 3.85, !, max_list([0.0, 1.770000e+00 * X + -5.814500e+00], Y0), min_list([1.0, Y0], Y).
+degree_sleep_excellent(X, Y) :- X =< 5, !, max_list([0.0, 2.664535e-15 * X + 1.000000e+00], Y0), min_list([1.0, Y0], Y).
+degree_sleep_excellent(X, Y) :- fail.
+
+
+degree_energy_low(X, Y) :- X < 0, !, fail.
+degree_energy_low(X, Y) :- X =< 25, !, max_list([0.0, 0.000000e+00 * X + 1.000000e+00], Y0), min_list([1.0, Y0], Y).
+degree_energy_low(X, Y) :- X =< 40, !, max_list([0.0, -5.000000e-02 * X + 2.250000e+00], Y0), min_list([1.0, Y0], Y).
+degree_energy_low(X, Y) :- X =< 50, !, max_list([0.0, -2.500000e-02 * X + 1.250000e+00], Y0), min_list([1.0, Y0], Y).
+degree_energy_low(X, Y) :- X =< 100, !, max_list([0.0, 0.000000e+00 * X + 0.000000e+00], Y0), min_list([1.0, Y0], Y).
+degree_energy_low(X, Y) :- fail.
+
+degree_energy_moderate(X, Y) :- X < 0.0, !, fail.
+degree_energy_moderate(X, Y) :- X =< 25, !, max_list([0.0, 2.000000e-02 * X + 0.000000e+00], Y0), min_list([1.0, Y0], Y).
+degree_energy_moderate(X, Y) :- X =< 37.5, !, max_list([0.0, 4.000000e-02 * X + -5.000000e-01], Y0), min_list([1.0, Y0], Y).
+degree_energy_moderate(X, Y) :- X =< 62.2, !, max_list([0.0, 5.551115e-17 * X + 1.000000e+00], Y0), min_list([1.0, Y0], Y).
+degree_energy_moderate(X, Y) :- X =< 68.4, !, max_list([0.0, -6.129032e-02 * X + 4.812258e+00], Y0), min_list([1.0, Y0], Y).
+degree_energy_moderate(X, Y) :- X =< 75, !, max_list([0.0, -6.363636e-02 * X + 4.972727e+00], Y0), min_list([1.0, Y0], Y).
+degree_energy_moderate(X, Y) :- X =< 87.5, !, max_list([0.0, -1.600000e-02 * X + 1.400000e+00], Y0), min_list([1.0, Y0], Y).
+degree_energy_moderate(X, Y) :- X =< 100, !, max_list([0.0, 0.000000e+00 * X + 0.000000e+00], Y0), min_list([1.0, Y0], Y).
+degree_energy_moderate(X, Y) :- fail.
+
+degree_energy_high(X, Y) :- X < 0, !, fail.
+degree_energy_high(X, Y) :- X =< 62.5, !, max_list([0.0, 4.000000e-03 * X + 0.000000e+00], Y0), min_list([1.0, Y0], Y).
+degree_energy_high(X, Y) :- X =< 70, !, max_list([0.0, 5.666667e-02 * X + -3.291667e+00], Y0), min_list([1.0, Y0], Y).
+degree_energy_high(X, Y) :- X =< 87.5, !, max_list([0.0, 4.285714e-03 * X + 3.750000e-01], Y0), min_list([1.0, Y0], Y).
+degree_energy_high(X, Y) :- X =< 90, !, max_list([0.0, 1.000000e-01 * X + -8.000000e+00], Y0), min_list([1.0, Y0], Y).
+degree_energy_high(X, Y) :- X =< 100, !, max_list([0.0, 0.000000e+00 * X + 1.000000e+00], Y0), min_list([1.0, Y0], Y).
+degree_energy_high(X, Y) :- fail.

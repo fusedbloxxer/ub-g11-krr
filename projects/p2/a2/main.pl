@@ -158,7 +158,7 @@ aggregate_consequents(X, Y):-
   findall(X -> Consequent -> Z, eval_consequent(Consequent, X, Z), E),
   findall(Z, eval_consequent(Consequent, X, Z), ConsequentsOutputs),
   max_list(ConsequentsOutputs, Y),
-  log_format('max = ~2f: ', [Y]),
+  log_format('max = ~4f: ', [Y]),
   write(E),
   nl.
 
@@ -173,12 +173,11 @@ defuzzify(Count, CentroidX):-
   sum_list(Xs, X),
   sum_list(Ys, Y),
   CentroidX is X / (SumY + 1e-12),
-  CentroidY is Y / (SumY + 1e-12),
   log_format('PointsX  = '), write(PointsX), nl,
   log_format('PointsY  = '), write(PointsY), nl,
   log_format('Xs       = '), write(Xs), nl,
   log_format('Ys       = '), write(Ys), nl,
-  log_format('Centroid = (~2f, ~2f)', [CentroidX, CentroidY]), nl.
+  log_format('x_centroid = ~4f', [CentroidX]), nl.
 
 
 solve(RuleList):-
@@ -196,7 +195,7 @@ solve(RuleList):-
   log_format('--> Aggregate Consequents (Predicate)'), nl,
   listing(aggregate_consequents),
   log_format('--> Aggregate Consequents + Defuzzify'), nl,
-  defuzzify(10, Ans),
+  defuzzify(100, Ans),
   log_format('--> Answer'), nl,
   user_input(Name, out, _),
   format('~s = ~2f', [Name, Ans]), nl,

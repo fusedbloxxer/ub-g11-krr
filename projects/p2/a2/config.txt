@@ -1,1 +1,1 @@
-[service/in, food/in, tip/out].
+[day/in, sleep/in, energy/out].

@@ -1,3 +1,3 @@
-[ or, [service/poor, food/rancid], [tip/cheap]].
-[ or, [service/poor], [tip/normal]].
-[ or, [service/excellent, food/delicious], [tip/generous]].
+[and, [day/busy, sleep/poor], [energy/low]].
+[and, [day/average, sleep/ok], [energy/moderate]].
+[ or, [day/free, sleep/excellent], [energy/high]].
